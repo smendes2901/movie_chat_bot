@@ -1,0 +1,7 @@
+__pycache__/*
+.ipynb_checkpoints/*
+datasets/*
+experiments/*
+model_dump/*
+model_output/*
+openlm-research-open_llama_3b_v2/*
