@@ -8,12 +8,12 @@ def generate_questions_palm2(prompt):
         completion = palm.generate_text(
             model="models/text-bison-001",
             prompt=prompt,
-            temperature=1,
+            temperature=0.8,
             # The maximum length of the response
-            max_output_tokens=500,
+            max_output_tokens=1000,
         )
         return completion.result
-    except:
+    except Exception:
         return ""
 
 

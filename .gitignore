@@ -4,6 +4,7 @@ datasets/*
 experiments/*
 model_dump/*
 model_output/*
-openlm-research-open_llama_3b_v2/*
+openlm-research-open_llama_3b_v2*/*
 local_cache/*
 offload/*
+reco_output/*
