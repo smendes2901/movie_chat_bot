@@ -4,6 +4,7 @@ from transformers import (
     BitsAndBytesConfig,
     LlamaForCausalLM,
     LlamaTokenizer,
+    TextStreamer,
 )
 
 DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
@@ -31,6 +32,10 @@ class LLM:
             model, lora_path, torch_dtype=torch.float16
         )
 
+        self.streamer = TextStreamer(
+            self.tokenizer, skip_prompt=True, skip_special_tokens=True
+        )
+
     def generate(self, prompt):
         inputs = self.tokenizer(prompt, return_tensors="pt")
         input_ids = inputs["input_ids"].to(DEVICE)
@@ -40,9 +45,10 @@ class LLM:
                 input_ids=input_ids,
                 return_dict_in_generate=True,
                 output_scores=True,
-                max_new_tokens=1024,
+                max_new_tokens=2048,
                 temperature=0.8,
                 do_sample=True,
+                streamer=self.streamer,
             )
 
         s = generation_output.sequences[0]
