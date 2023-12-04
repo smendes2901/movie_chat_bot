@@ -2,6 +2,13 @@ from tqdm import tqdm
 from llm_inference import LLM
 from retreiver import Retreiver
 
+try:
+    import tensorflow as tf
+
+    tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
+except Exception:
+    print("Running on local")
+
 tqdm.pandas()
 
 

@@ -37,6 +37,8 @@ class LLM:
         )
 
     def generate(self, prompt):
+        # print(prompt)
+        torch.cuda.empty_cache()
         inputs = self.tokenizer(prompt, return_tensors="pt")
         input_ids = inputs["input_ids"].to(DEVICE)
 
