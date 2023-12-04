@@ -8,23 +8,23 @@ tqdm.pandas()
 class MovieChatBot:
     def __init__(self) -> None:
         print("loading models")
-        self.llm = LLM("meta-llama/Llama-2-7b-hf", "model_dump/llama-7b-v1")
+        self.llm = LLM("meta-llama/Llama-2-7b-chat-hf", "model_dump/llama-7b-chat-v1")
         self.retreiver = Retreiver()
 
     def query(self, query):
         category = self.retreiver.query_classifier(user_query)
 
-        if category == "recommendation query":
+        if category == 1:
             prompt = self.retreiver.fetch_reco_prompt(query)
         else:
             prompt = self.retreiver.fetch_info_prompt(query)
         output = self.llm.generate(prompt)
-        print(output)
+        # print(output)
 
 
 if __name__ == "__main__":
     movie_chatbot = MovieChatBot()
+    while True:
+        user_query = input("Enter your query: ")
 
-    user_query = "Who is Harry Potter in Harry Potter and the Goblet of Fire 2005?"
-
-    movie_chatbot.query(user_query)
+        movie_chatbot.query(user_query.strip())

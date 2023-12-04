@@ -45,7 +45,7 @@ class LLM:
                 input_ids=input_ids,
                 return_dict_in_generate=True,
                 output_scores=True,
-                max_new_tokens=2048,
+                max_new_tokens=512,
                 temperature=0.8,
                 do_sample=True,
                 streamer=self.streamer,

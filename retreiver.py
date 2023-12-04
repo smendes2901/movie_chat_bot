@@ -41,14 +41,19 @@ class Retreiver:
         self.movie_reco_embedding = np.load(
             "./datasets/movie_datasets/imdb/movie_reco_embeddings.npy"
         )
-        self.category = ["recommendation query", "information query"]
+        self.category = [
+            "recommendation new movies",
+            "fetch information regarding a movie",
+        ]
         self.catgory_embeddings = self.query_model.encode(self.category)
         self.prompt = Prompt()
 
     def query_classifier(self, query):
-        query_embeddings = self.query_model.encode(query)
-        score = util.cos_sim(query_embeddings, self.catgory_embeddings)
-        return self.category[np.argmax(score)]
+        return 1 if "recommend" in query.lower() or "similar" in query.lower() else 0
+
+        # query_embeddings = self.query_model.encode([query])
+        # score = util.cos_sim(query_embeddings, self.catgory_embeddings)
+        # return np.argmax(score)
 
     def get_movie_record(self, query):
         query_embeddings = self.movie.encode(query)
@@ -77,7 +82,7 @@ class Retreiver:
             movie_title=movie_title, input_titles="\n".join(top_k_movies)
         )
 
-    def fetch_query_prompt(self, query):
+    def fetch_info_prompt(self, query):
         movie_record = self.get_movie_record(query)
         tconst = movie_record["tconst"]
         the_matrix = self.ia.get_movie(tconst[2:])
